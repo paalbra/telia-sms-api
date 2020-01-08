@@ -1,19 +1,13 @@
-import configparser
-
 import requests
 
 class TeliaAPI():
 
-    def __init__(self, config_path):
-        self.config_path = config_path
-
-        self.config = configparser.ConfigParser()
-        self.config.read(config_path)
-        self.username = self.config["telia"]["username"]
-        self.password = self.config["telia"]["password"]
+    def __init__(self, username, password, user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0"):
+        self.username = username
+        self.password = password
 
         self.session = requests.Session()
-        self.session.headers.update({"User-Agent": self.config["telia"]["user_agent"]})
+        self.session.headers.update({"User-Agent": user_agent})
 
         self.auth = self.do_auth().json()
 
